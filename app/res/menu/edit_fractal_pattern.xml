@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.bop.fractals.android.EditFractalPattern" >
+
+    <item android:id="@+id/color" android:title="Change Color..."/>
+    <item android:id="@+id/edit" android:title="Edit Pattern"/>
+    <item android:id="@+id/clear" android:title="Clear Pattern"/>
+    <item android:id="@+id/generate" android:title="Generate New Fractal"/>
+    <item android:id="@+id/fractal" android:title="View Last Fractal"/>
+
+</menu>
