@@ -1,4 +1,4 @@
-include ':app'
+include ':app', 'fractal-framework'
 
 rootProject.name = 'fractal-android'
 
