@@ -1,0 +1,59 @@
+apply plugin: 'eclipse'
+
+import org.gradle.plugins.ide.eclipse.model.Library
+
+tasks.eclipse.dependsOn(cleanEclipse)
+
+eclipse {
+	project {
+		buildCommand 'com.android.ide.eclipse.adt.ResourceManagerBuilder'
+		buildCommand 'com.android.ide.eclipse.adt.PreCompilerBuilder'
+		buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
+	}
+
+	classpath {
+		downloadSources = true
+		downloadJavadoc = false
+	}
+
+	jdt {
+		// if you want to alter the java versions (by default they are configured with gradle java plugin settings):
+		sourceCompatibility = 1.6
+		targetCompatibility = sourceCompatibility
+//		javaRuntimeName = 'J2SE-1.5'
+	}
+}
+
+eclipse.project.file.whenMerged { project ->
+	project.natures.clear()
+	project.natures = ['com.android.ide.eclipse.adt.AndroidNature', 'org.eclipse.jdt.core.javanature']
+}
+
+eclipse.classpath.file.withXml {
+    def node = it.asNode()
+    node.children().removeAll() { true }
+
+    node.appendNode('classpathentry kind="src" path="src/main/java"')
+    node.appendNode('classpathentry kind="src" path="gen"')
+    node.appendNode('classpathentry kind="src" path="src/test/java"')
+
+    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
+    node.appendNode('classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"')
+    node.appendNode('classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"')
+
+    node.appendNode('classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"')
+
+    def jdkContainer = "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-${eclipse.jdt.sourceCompatibility}/"
+    node.appendNode('classpathentry kind="con" path="' + jdkContainer + '"')
+
+    node.appendNode('classpathentry kind="output" path="bin"')
+
+	def configs = project.configurations.all.findAll { !it.allDependencies.empty }
+	def deps = configs.collect { it.allDependencies }.flatten().unique()
+	def projDeps = deps.findAll { it instanceof org.gradle.api.internal.artifacts.dependencies.DefaultProjectDependency }
+	projDeps.each {
+		def proj = rootProject.project(it.dependencyProject.name)
+		node.appendNode('classpathentry', [kind: 'lib', exported: "true", path: "${proj.jar.archivePath}", sourcepath: "/${proj.eclipse.project.name}"])
+	}
+}
+
