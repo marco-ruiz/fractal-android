@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.bop.fractals.android.EditFractalPattern" >
+    tools:context="org.bop.fractals.client.android.EditPatternActivity" >
 
     <item android:id="@+id/color" android:title="Change Color..."/>
     <item android:id="@+id/edit" android:title="Edit Pattern"/>
