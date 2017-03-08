@@ -1,3 +1,4 @@
+apply plugin: 'com.android.application'
 apply plugin: 'eclipse'
 
 import org.gradle.plugins.ide.eclipse.model.Library
