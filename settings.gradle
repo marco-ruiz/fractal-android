@@ -6,5 +6,5 @@ rootProject.buildFileName = "${rootProject.name}.gradle"
 
 rootProject.children.each { project ->
     project.buildFileName = "${project.name}.gradle"
-    println project.buildFileName
+//    println project.buildFileName
 }
