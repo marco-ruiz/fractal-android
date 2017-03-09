@@ -6,10 +6,11 @@
 
 From the command line issue the following commands:
 
-1. `cd [WORKING DIRECTORY]` : to move into the working directory
-2. `git clone --recursive [CLONE REPOSITORY URL]` : to clone the project's repository
-3. `cd fractal-android/` : to move into the sub-directory of the project just cloned
-4. `./gradlew assemble` : to build the **APK** file to upload to your android device
+1. `export ANDROID_HOME=[ANDROID SDK DIRECTORY]` : only necessary if your system doesn't have this environment variable already set.
+2. `cd [WORKING DIRECTORY]` : to move into the working directory
+3. `git clone --recursive [CLONE REPOSITORY URL]` : to clone the project's repository
+4. `cd fractal-android/` : to move into the sub-directory of the project just cloned
+5. `./gradlew assemble` : to build the **APK** file to upload to your android device
 
 Upload the **APK** file assembled to your android device.
 Location: `[WORKING DIRECTORY]/fractal-android/app/build/outputs/apk/app-free-release-unsigned.apk`
